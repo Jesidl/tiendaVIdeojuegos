@@ -13,6 +13,8 @@ try
         .Include(x => x._Sucursal)
         .Include(x => x._Cargo)
         .ToList();
+    var lista_categorias = conexion.Categorias!.ToList();
+    var lista_plataformas = conexion.Plataformas!.ToList();
 }
 catch (Exception ex)
 {

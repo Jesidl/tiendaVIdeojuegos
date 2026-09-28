@@ -11,6 +11,8 @@ namespace lib_aplicaciones.interfaces
         DbSet<Cargos>? Cargos { get; set; }
         DbSet<Sucursales>? Sucursales { get; set; }
         DbSet<Empleados>? Empleados { get; set; }
+        DbSet<Categorias>? Categorias { get; set; }
+        DbSet<Plataformas>? Plataformas { get; set; }
 
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();

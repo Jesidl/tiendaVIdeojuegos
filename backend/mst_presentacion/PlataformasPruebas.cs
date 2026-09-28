@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class SucursalesPruebas
+    public class PlataformasPruebas
     {
         private IConexion conexion;
-        private Sucursales? entidad = null;
+        private Plataformas? entidad = null;
 
-        public SucursalesPruebas()
+        public PlataformasPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,37 +29,36 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Sucursales()
+            this.entidad = new Plataformas()
             {
-                Nombre = "Sucursal Norte",
-                Direccion = "Carrera 52 # 80-10",
-                Ciudad = "Bello",
-                Telefono = "6044567890",
+                Nombre = "PlayStation 5",
+                Fabricante = "Sony",
+                Tipo = "Consola",
                 Estado = true,
             };
-            this.conexion.Sucursales!.Add(this.entidad!);
+            this.conexion.Plataformas!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_sucursales = this.conexion.Sucursales!.ToList();
-            if (lista_sucursales.Count <= 0)
+            var lista_plataformas = this.conexion.Plataformas!.ToList();
+            if (lista_plataformas.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Tipo = "Consola de sobremesa";
 
-            var entry = this.conexion!.Entry<Sucursales>(this.entidad);
+            var entry = this.conexion!.Entry<Plataformas>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Sucursales!.Remove(this.entidad!);
+            this.conexion.Plataformas!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

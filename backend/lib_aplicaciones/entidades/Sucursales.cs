@@ -7,7 +7,7 @@ namespace lib_aplicaciones.entidades
         public string? Direccion { get; set; }
         public string? Ciudad { get; set; }
         public string? Telefono { get; set; }
-        public string? Estado { get; set; }
+        public bool Estado { get; set; }
 
         public List<Empleados>? Empleados { get; set; }
     }

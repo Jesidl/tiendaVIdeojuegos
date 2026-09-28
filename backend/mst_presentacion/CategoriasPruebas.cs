@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class SucursalesPruebas
+    public class CategoriasPruebas
     {
         private IConexion conexion;
-        private Sucursales? entidad = null;
+        private Categorias? entidad = null;
 
-        public SucursalesPruebas()
+        public CategoriasPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,22 +29,21 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Sucursales()
+            this.entidad = new Categorias()
             {
-                Nombre = "Sucursal Norte",
-                Direccion = "Carrera 52 # 80-10",
-                Ciudad = "Bello",
-                Telefono = "6044567890",
+                Nombre = "Deportes",
+                Descripcion = "Juegos de futbol, baloncesto y carreras",
                 Estado = true,
+                Fecha_Creacion = DateTime.Now,
             };
-            this.conexion.Sucursales!.Add(this.entidad!);
+            this.conexion.Categorias!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_sucursales = this.conexion.Sucursales!.ToList();
-            if (lista_sucursales.Count <= 0)
+            var lista_categorias = this.conexion.Categorias!.ToList();
+            if (lista_categorias.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
@@ -52,14 +51,14 @@ namespace pruebas_unitarias
         {
             this.entidad!.Estado = false;
 
-            var entry = this.conexion!.Entry<Sucursales>(this.entidad);
+            var entry = this.conexion!.Entry<Categorias>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Sucursales!.Remove(this.entidad!);
+            this.conexion.Categorias!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

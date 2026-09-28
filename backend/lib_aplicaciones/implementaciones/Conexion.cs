@@ -17,5 +17,7 @@ namespace lib_aplicaciones.implementaciones
         public DbSet<Cargos>? Cargos { get; set; }
         public DbSet<Sucursales>? Sucursales { get; set; }
         public DbSet<Empleados>? Empleados { get; set; }
+        public DbSet<Categorias>? Categorias { get; set; }
+        public DbSet<Plataformas>? Plataformas { get; set; }
     }
 }

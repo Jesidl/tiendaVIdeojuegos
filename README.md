@@ -121,6 +121,13 @@ namespace lib_aplicaciones.entidades
   - Todas las columnas `NOT NULL`.
   - `UNIQUE` de una columna en `Clientes.Cedula`, `Empleados.Cedula`, `Proveedores.Nit` y `Desarrolladores.Nit`.
   - Fechas de las semillas con `GETDATE()`.
+  - Columnas `Estado` (valores que usa todo el equipo):
+
+    | Tabla | Tipo SQL / C# | Valores |
+    |---|---|---|
+    | `Sucursales`, `Categorias`, `Plataformas` | `BIT` / `bool` (como `Libros.Estado` del profesor) | `1` = activa · `0` = inactiva |
+    | `Videojuegos` | `NVARCHAR(20)` / `string?` | `Disponible`, `Descontinuado`, `Preventa` |
+    | `Pedidos` | `NVARCHAR(20)` / `string?` | `Pendiente`, `Enviado`, `Recibido`, `Cancelado` |
   - Solo se usan construcciones vistas en los ejemplos de clase (sin `CHECK`, `UNIQUE` compuestos ni funciones de fecha adicionales).
   - FK en línea: `[Cliente] INT NOT NULL REFERENCES [Clientes]([Id]),`
 - **Datos semilla:** después de cada `CREATE TABLE` va un `INSERT` con un registro. Así toda tabla tiene un registro con `Id = 1`, que las pruebas de las entidades hijas usan como FK.
@@ -286,7 +293,7 @@ En Visual Studio Community: abrir `backend/tiendaVideojuegos.slnx`, compilar con
 
 ### Cómo agregar una entidad a la solución
 
-`Script.sql` ya tiene las 20 tablas; la solución tiene hoy **3 entidades con flujo completo** (`Cargos`, `Sucursales`, `Empleados`), que sirven de modelo. Para cada entidad nueva:
+`Script.sql` ya tiene las 20 tablas; la solución tiene hoy **5 entidades con flujo completo** (`Cargos`, `Sucursales`, `Empleados`, `Categorias`, `Plataformas`), que sirven de modelo. Para cada entidad nueva:
 
 1. **Entidad:** crear `lib_aplicaciones/entidades/<Entidad>.cs` con las mismas columnas de su tabla en `Script.sql`. Cada FK lleva `int` + `[ForeignKey("X")] public Padre? _X { get; set; }` (ver `Empleados.cs`).
 2. **Colección inversa:** en cada entidad padre agregar `public List<<Entidad>>? <Entidad> { get; set; }` (ver `Sucursales.Empleados`).
@@ -371,5 +378,5 @@ else
   - [x] Solución con los 3 proyectos en `backend/`
   - [x] `Script.sql` con las 20 tablas y sus semillas (probado en SQL Server Express)
   - [x] `IConexion`, `Conexion` y `nucleo/Datosgenerales`
-  - [x] 3 entidades con flujo completo (entidad + `DbSet` + consola + prueba): `Cargos`, `Sucursales`, `Empleados` — 3/3 pruebas correctas
-  - [ ] 17 entidades restantes (ver [Cómo agregar una entidad](#cómo-agregar-una-entidad-a-la-solución))
+  - [x] 5 entidades con flujo completo (entidad + `DbSet` + consola + prueba): `Cargos`, `Sucursales`, `Empleados`, `Categorias`, `Plataformas` — 5/5 pruebas correctas
+  - [ ] 15 entidades restantes (ver [Cómo agregar una entidad](#cómo-agregar-una-entidad-a-la-solución))

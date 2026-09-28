@@ -20,11 +20,11 @@ CREATE TABLE [Sucursales] (
 	[Direccion] NVARCHAR(200) NOT NULL,
 	[Ciudad] NVARCHAR(100) NOT NULL,
 	[Telefono] NVARCHAR(20) NOT NULL,
-	[Estado] NVARCHAR(20) NOT NULL,
+	[Estado] BIT NOT NULL,
 );
 
 INSERT INTO [Sucursales] ([Nombre], [Direccion], [Ciudad], [Telefono], [Estado])
-VALUES ('Sucursal Centro', 'Calle 50 # 45-20', 'Medellin', '6045551234', 'Activa');
+VALUES ('Sucursal Centro', 'Calle 50 # 45-20', 'Medellin', '6045551234', 1);
 
 CREATE TABLE [Clientes] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
@@ -52,23 +52,23 @@ CREATE TABLE [Categorias] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Nombre] NVARCHAR(100) NOT NULL,
 	[Descripcion] NVARCHAR(500) NOT NULL,
-	[Estado] NVARCHAR(20) NOT NULL,
+	[Estado] BIT NOT NULL,
 	[Fecha_Creacion] SMALLDATETIME NOT NULL,
 );
 
 INSERT INTO [Categorias] ([Nombre], [Descripcion], [Estado], [Fecha_Creacion])
-VALUES ('Accion', 'Juegos de accion y aventura', 'Activa', GETDATE());
+VALUES ('Accion', 'Juegos de accion y aventura', 1, GETDATE());
 
 CREATE TABLE [Plataformas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Nombre] NVARCHAR(100) NOT NULL,
 	[Fabricante] NVARCHAR(100) NOT NULL,
 	[Tipo] NVARCHAR(50) NOT NULL,
-	[Estado] NVARCHAR(20) NOT NULL,
+	[Estado] BIT NOT NULL,
 );
 
 INSERT INTO [Plataformas] ([Nombre], [Fabricante], [Tipo], [Estado])
-VALUES ('Nintendo Switch', 'Nintendo', 'Consola', 'Activa');
+VALUES ('Nintendo Switch', 'Nintendo', 'Consola', 1);
 
 CREATE TABLE [Promociones] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
