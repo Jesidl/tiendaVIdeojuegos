@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class Metodos_PagoPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Metodos_Pago? entidad = null;
 
-        public CategoriasPruebas()
+        public Metodos_PagoPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,20 +29,20 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Metodos_Pago()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
+                Nombre = "Nequi",
+                Descripcion = "Transferencia por billetera digital",
                 Estado = true,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Metodos_Pago!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_metodos_pago = this.conexion.Metodos_Pago!.ToList();
+            if (lista_metodos_pago.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
@@ -50,14 +50,14 @@ namespace pruebas_unitarias
         {
             this.entidad!.Estado = false;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Metodos_Pago>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Metodos_Pago!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

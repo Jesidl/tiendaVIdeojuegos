@@ -31,9 +31,9 @@ namespace pruebas_unitarias
         {
             this.entidad = new Empleados()
             {
-                Nombre = "Prueba",
                 Cedula = "564",
-                Direccion = "Calle 30 # 65-12",
+                Nombre = "Prueba",
+                Telefono = "3201112233",
                 Sucursal = 1,
                 Cargo = 1,
             };
@@ -50,7 +50,7 @@ namespace pruebas_unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Direccion = "Calle 30 # 65-14";
+            this.entidad!.Telefono = "3201112244";
 
             var entry = this.conexion!.Entry<Empleados>(this.entidad);
             entry.State = EntityState.Modified;

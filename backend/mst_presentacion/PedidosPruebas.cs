@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class PedidosPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Pedidos? entidad = null;
 
-        public CategoriasPruebas()
+        public PedidosPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,38 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Pedidos()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Codigo = "P-PRB",
+                Proveedor = 1,
+                Empleado = 1,
+                Fecha = DateTime.Now,
+                Estado = "Pendiente",
+                Total = 900000.00m,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Pedidos!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_pedidos = this.conexion.Pedidos!.ToList();
+            if (lista_pedidos.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Estado = "Recibido";
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Pedidos>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Pedidos!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

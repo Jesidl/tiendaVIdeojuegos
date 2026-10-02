@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class InventariosPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Inventarios? entidad = null;
 
-        public CategoriasPruebas()
+        public InventariosPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,37 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Inventarios()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Variante = 1,
+                Sucursal = 1,
+                Cantidad = 12,
+                Stock_Minimo = 3,
+                Fecha_Actualizacion = DateTime.Now,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Inventarios!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_inventarios = this.conexion.Inventarios!.ToList();
+            if (lista_inventarios.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Cantidad = 10;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Inventarios>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Inventarios!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

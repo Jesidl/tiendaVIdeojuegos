@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class MaterialesPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Materiales? entidad = null;
 
-        public CategoriasPruebas()
+        public MaterialesPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,34 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Materiales()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Nombre = "Latex",
+                Descripcion = "Caucho natural para efecto termico",
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Materiales!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_materiales = this.conexion.Materiales!.ToList();
+            if (lista_materiales.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Descripcion = "Caucho natural de alta compresion";
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Materiales>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Materiales!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class ClientesPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Clientes? entidad = null;
 
-        public CategoriasPruebas()
+        public ClientesPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,37 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Clientes()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Cedula = "564",
+                Nombre = "Prueba",
+                Telefono = "3005556677",
+                Correo = "prueba@correo.com",
+                Direccion = "Calle 30 # 65-12",
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Clientes!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_clientes = this.conexion.Clientes!.ToList();
+            if (lista_clientes.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Telefono = "3005556688";
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Clientes>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Clientes!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

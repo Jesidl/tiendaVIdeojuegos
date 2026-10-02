@@ -1,7 +1,7 @@
 /*
-CREATE DATABASE db_tienda_videojuegos;
+CREATE DATABASE db_tienda_fajas;
 GO
-USE db_tienda_videojuegos;
+USE db_tienda_fajas;
 GO
 
 CREATE TABLE [Cargos] (
@@ -12,7 +12,7 @@ CREATE TABLE [Cargos] (
 );
 
 INSERT INTO [Cargos] ([Nombre], [Descripcion], [Salario])
-VALUES ('Vendedor', 'Atencion y venta en tienda', 1800000.00);
+VALUES ('Asesora comercial', 'Atencion y venta de fajas', 1600000.00);
 
 CREATE TABLE [Sucursales] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
@@ -24,18 +24,19 @@ CREATE TABLE [Sucursales] (
 );
 
 INSERT INTO [Sucursales] ([Nombre], [Direccion], [Ciudad], [Telefono], [Estado])
-VALUES ('Sucursal Centro', 'Calle 50 # 45-20', 'Medellin', '6045551234', 1);
+VALUES ('Sucursal Centro', 'Calle 52 # 49-30', 'Medellin', '6045123456', 1);
 
 CREATE TABLE [Clientes] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Nombre] NVARCHAR(200) NOT NULL,
-	[Direccion] NVARCHAR(200) NOT NULL,
 	[Cedula] NVARCHAR(50) NOT NULL UNIQUE,
-	[Ciudad] NVARCHAR(100) NOT NULL,
+	[Nombre] NVARCHAR(200) NOT NULL,
+	[Telefono] NVARCHAR(20) NOT NULL,
+	[Correo] NVARCHAR(100) NOT NULL,
+	[Direccion] NVARCHAR(200) NOT NULL,
 );
 
-INSERT INTO [Clientes] ([Nombre], [Direccion], [Cedula], [Ciudad])
-VALUES ('Pepito Perez', 'Carrera 70 # 30-15', '1001', 'Medellin');
+INSERT INTO [Clientes] ([Cedula], [Nombre], [Telefono], [Correo], [Direccion])
+VALUES ('1001', 'Maria Lopez', '3001234567', 'maria@correo.com', 'Calle 10 # 20-30');
 
 CREATE TABLE [Proveedores] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
@@ -46,187 +47,185 @@ CREATE TABLE [Proveedores] (
 );
 
 INSERT INTO [Proveedores] ([Nit], [Nombre_Empresa], [Telefono], [Correo])
-VALUES ('900123456-1', 'Distribuidora Gamer SAS', '6044440000', 'ventas@distgamer.com');
+VALUES ('900123456-1', 'Confecciones Moldeate SAS', '6044440000', 'ventas@moldeate.com');
 
 CREATE TABLE [Categorias] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Nombre] NVARCHAR(100) NOT NULL,
 	[Descripcion] NVARCHAR(500) NOT NULL,
 	[Estado] BIT NOT NULL,
-	[Fecha_Creacion] SMALLDATETIME NOT NULL,
 );
 
-INSERT INTO [Categorias] ([Nombre], [Descripcion], [Estado], [Fecha_Creacion])
-VALUES ('Accion', 'Juegos de accion y aventura', 1, GETDATE());
+INSERT INTO [Categorias] ([Nombre], [Descripcion], [Estado])
+VALUES ('Postquirurgicas', 'Fajas para recuperacion despues de cirugia', 1);
 
-CREATE TABLE [Plataformas] (
+CREATE TABLE [Marcas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Nombre] NVARCHAR(100) NOT NULL,
-	[Fabricante] NVARCHAR(100) NOT NULL,
-	[Tipo] NVARCHAR(50) NOT NULL,
+	[Pais] NVARCHAR(100) NOT NULL,
 	[Estado] BIT NOT NULL,
 );
 
-INSERT INTO [Plataformas] ([Nombre], [Fabricante], [Tipo], [Estado])
-VALUES ('Nintendo Switch', 'Nintendo', 'Consola', 1);
+INSERT INTO [Marcas] ([Nombre], [Pais], [Estado])
+VALUES ('Fajas Salome', 'Colombia', 1);
 
-CREATE TABLE [Promociones] (
+CREATE TABLE [Materiales] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Nombre] NVARCHAR(100) NOT NULL,
 	[Descripcion] NVARCHAR(500) NOT NULL,
-	[Porcentaje_Desc] DECIMAL(10, 2) NOT NULL,
-	[Fecha_Inicio] SMALLDATETIME NOT NULL,
-	[Fecha_Fin] SMALLDATETIME NOT NULL,
 );
 
-INSERT INTO [Promociones] ([Nombre], [Descripcion], [Porcentaje_Desc], [Fecha_Inicio], [Fecha_Fin])
-VALUES ('Black Friday', 'Descuento de temporada', 20.00, GETDATE(), GETDATE());
+INSERT INTO [Materiales] ([Nombre], [Descripcion])
+VALUES ('Powernet', 'Tela de alta compresion y transpirable');
 
-CREATE TABLE [Desarrolladores] (
+CREATE TABLE [Tallas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Nombre] NVARCHAR(200) NOT NULL,
-	[Nit] NVARCHAR(50) NOT NULL UNIQUE,
-	[Pais] NVARCHAR(100) NOT NULL,
-	[Sitio_Web] NVARCHAR(200) NOT NULL,
+	[Nombre] NVARCHAR(10) NOT NULL,
+	[Descripcion] NVARCHAR(200) NOT NULL,
 );
 
-INSERT INTO [Desarrolladores] ([Nombre], [Nit], [Pais], [Sitio_Web])
-VALUES ('Nintendo EPD', 'JP-0001', 'Japon', 'www.nintendo.com');
+INSERT INTO [Tallas] ([Nombre], [Descripcion])
+VALUES ('M', 'Cintura de 70 a 76 cm');
+
+CREATE TABLE [Colores] (
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Nombre] NVARCHAR(50) NOT NULL,
+	[Codigo_Hex] NVARCHAR(10) NOT NULL,
+);
+
+INSERT INTO [Colores] ([Nombre], [Codigo_Hex])
+VALUES ('Beige', '#F5F5DC');
+
+CREATE TABLE [Metodos_Pago] (
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Nombre] NVARCHAR(50) NOT NULL,
+	[Descripcion] NVARCHAR(500) NOT NULL,
+	[Estado] BIT NOT NULL,
+);
+
+INSERT INTO [Metodos_Pago] ([Nombre], [Descripcion], [Estado])
+VALUES ('Efectivo', 'Pago en caja', 1);
 
 CREATE TABLE [Empleados] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Nombre] NVARCHAR(200) NOT NULL,
 	[Cedula] NVARCHAR(50) NOT NULL UNIQUE,
-	[Direccion] NVARCHAR(200) NOT NULL,
+	[Nombre] NVARCHAR(200) NOT NULL,
+	[Telefono] NVARCHAR(20) NOT NULL,
 	[Sucursal] INT NOT NULL REFERENCES [Sucursales]([Id]),
 	[Cargo] INT NOT NULL REFERENCES [Cargos]([Id]),
 );
 
-INSERT INTO [Empleados] ([Nombre], [Cedula], [Direccion], [Sucursal], [Cargo])
-VALUES ('Juan Gomez', '2001', 'Calle 10 # 20-30', 1, 1);
+INSERT INTO [Empleados] ([Cedula], [Nombre], [Telefono], [Sucursal], [Cargo])
+VALUES ('2001', 'Laura Gomez', '3109876543', 1, 1);
 
-CREATE TABLE [Videojuegos] (
+CREATE TABLE [Medidas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Categoria] INT NOT NULL REFERENCES [Categorias]([Id]),
+	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id]),
+	[Cintura] DECIMAL(10, 2) NOT NULL,
+	[Cadera] DECIMAL(10, 2) NOT NULL,
+	[Busto] DECIMAL(10, 2) NOT NULL,
+	[Fecha] SMALLDATETIME NOT NULL,
+);
+
+INSERT INTO [Medidas] ([Cliente], [Cintura], [Cadera], [Busto], [Fecha])
+VALUES (1, 72.50, 98.00, 90.00, GETDATE());
+
+CREATE TABLE [Productos] (
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Codigo] NVARCHAR(50) NOT NULL UNIQUE,
 	[Nombre] NVARCHAR(200) NOT NULL,
+	[Descripcion] NVARCHAR(500) NOT NULL,
 	[Precio] DECIMAL(10, 2) NOT NULL,
-	[Estado] NVARCHAR(20) NOT NULL,
+	[Estado] BIT NOT NULL,
+	[Categoria] INT NOT NULL REFERENCES [Categorias]([Id]),
+	[Marca] INT NOT NULL REFERENCES [Marcas]([Id]),
+	[Material] INT NOT NULL REFERENCES [Materiales]([Id]),
 );
 
-INSERT INTO [Videojuegos] ([Categoria], [Nombre], [Precio], [Estado])
-VALUES (1, 'The Legend of Zelda', 250000.00, 'Disponible');
+INSERT INTO [Productos] ([Codigo], [Nombre], [Descripcion], [Precio], [Estado], [Categoria], [Marca], [Material])
+VALUES ('FAJ-001', 'Faja reductora postquirurgica', 'Faja de alta compresion con broches', 280000.00, 1, 1, 1, 1);
 
-CREATE TABLE [VJ_Plataformas] (
+CREATE TABLE [Variantes] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
-	[Plataforma] INT NOT NULL REFERENCES [Plataformas]([Id]),
-	[Fecha_Lanzamiento] SMALLDATETIME NOT NULL,
-	[Precio_Plataforma] DECIMAL(10, 2) NOT NULL,
+	[Sku] NVARCHAR(50) NOT NULL UNIQUE,
+	[Producto] INT NOT NULL REFERENCES [Productos]([Id]),
+	[Talla] INT NOT NULL REFERENCES [Tallas]([Id]),
+	[Color] INT NOT NULL REFERENCES [Colores]([Id]),
+	[Precio_Adicional] DECIMAL(10, 2) NOT NULL,
 );
 
-INSERT INTO [VJ_Plataformas] ([Videojuego], [Plataforma], [Fecha_Lanzamiento], [Precio_Plataforma])
-VALUES (1, 1, GETDATE(), 260000.00);
+INSERT INTO [Variantes] ([Sku], [Producto], [Talla], [Color], [Precio_Adicional])
+VALUES ('FAJ-001-M-BEI', 1, 1, 1, 0.00);
 
 CREATE TABLE [Inventarios] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Cantidad] INT NOT NULL,
-	[Fecha_Actualizacion] SMALLDATETIME NOT NULL,
-	[Stock_Minimo] INT NOT NULL,
+	[Variante] INT NOT NULL REFERENCES [Variantes]([Id]),
 	[Sucursal] INT NOT NULL REFERENCES [Sucursales]([Id]),
-	[Vj_Plataforma] INT NOT NULL REFERENCES [VJ_Plataformas]([Id]),
+	[Cantidad] INT NOT NULL,
+	[Stock_Minimo] INT NOT NULL,
+	[Fecha_Actualizacion] SMALLDATETIME NOT NULL,
 );
 
-INSERT INTO [Inventarios] ([Cantidad], [Fecha_Actualizacion], [Stock_Minimo], [Sucursal], [Vj_Plataforma])
-VALUES (50, GETDATE(), 5, 1, 1);
+INSERT INTO [Inventarios] ([Variante], [Sucursal], [Cantidad], [Stock_Minimo], [Fecha_Actualizacion])
+VALUES (1, 1, 30, 5, GETDATE());
 
 CREATE TABLE [Ventas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Codigo] NVARCHAR(50) NOT NULL UNIQUE,
 	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id]),
 	[Empleado] INT NOT NULL REFERENCES [Empleados]([Id]),
-	[Fecha_Venta] SMALLDATETIME NOT NULL,
+	[Fecha] SMALLDATETIME NOT NULL,
 	[Total] DECIMAL(10, 2) NOT NULL,
 );
 
-INSERT INTO [Ventas] ([Cliente], [Empleado], [Fecha_Venta], [Total])
-VALUES (1, 1, GETDATE(), 260000.00);
+INSERT INTO [Ventas] ([Codigo], [Cliente], [Empleado], [Fecha], [Total])
+VALUES ('V-0001', 1, 1, GETDATE(), 280000.00);
 
-CREATE TABLE [Detalle_Ventas] (
+CREATE TABLE [Detalles_Ventas] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Venta] INT NOT NULL REFERENCES [Ventas]([Id]),
+	[Variante] INT NOT NULL REFERENCES [Variantes]([Id]),
 	[Cantidad] INT NOT NULL,
 	[Precio_Unitario] DECIMAL(10, 2) NOT NULL,
 	[Subtotal] DECIMAL(10, 2) NOT NULL,
-	[Vj_Plataforma] INT NOT NULL REFERENCES [VJ_Plataformas]([Id]),
 );
 
-INSERT INTO [Detalle_Ventas] ([Venta], [Cantidad], [Precio_Unitario], [Subtotal], [Vj_Plataforma])
-VALUES (1, 1, 260000.00, 260000.00, 1);
+INSERT INTO [Detalles_Ventas] ([Venta], [Variante], [Cantidad], [Precio_Unitario], [Subtotal])
+VALUES (1, 1, 1, 280000.00, 280000.00);
 
-CREATE TABLE [Metodo_Pagos] (
+CREATE TABLE [Pagos] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Venta] INT NOT NULL REFERENCES [Ventas]([Id]),
-	[Tipo_Pago] NVARCHAR(50) NOT NULL,
+	[Metodo_Pago] INT NOT NULL REFERENCES [Metodos_Pago]([Id]),
 	[Valor] DECIMAL(10, 2) NOT NULL,
-	[Descripcion] NVARCHAR(500) NOT NULL,
+	[Fecha] SMALLDATETIME NOT NULL,
 );
 
-INSERT INTO [Metodo_Pagos] ([Venta], [Tipo_Pago], [Valor], [Descripcion])
-VALUES (1, 'Efectivo', 260000.00, 'Pago completo en caja');
+INSERT INTO [Pagos] ([Venta], [Metodo_Pago], [Valor], [Fecha])
+VALUES (1, 1, 280000.00, GETDATE());
 
 CREATE TABLE [Pedidos] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	[Codigo] NVARCHAR(50) NOT NULL UNIQUE,
 	[Proveedor] INT NOT NULL REFERENCES [Proveedores]([Id]),
 	[Empleado] INT NOT NULL REFERENCES [Empleados]([Id]),
-	[Fecha_Pedido] SMALLDATETIME NOT NULL,
+	[Fecha] SMALLDATETIME NOT NULL,
 	[Estado] NVARCHAR(20) NOT NULL,
 	[Total] DECIMAL(10, 2) NOT NULL,
 );
 
-INSERT INTO [Pedidos] ([Proveedor], [Empleado], [Fecha_Pedido], [Estado], [Total])
-VALUES (1, 1, GETDATE(), 'Recibido', 1800000.00);
+INSERT INTO [Pedidos] ([Codigo], [Proveedor], [Empleado], [Fecha], [Estado], [Total])
+VALUES ('P-0001', 1, 1, GETDATE(), 'Recibido', 1800000.00);
 
-CREATE TABLE [Detalle_Pedidos] (
+CREATE TABLE [Detalles_Pedidos] (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	[Pedido] INT NOT NULL REFERENCES [Pedidos]([Id]),
+	[Variante] INT NOT NULL REFERENCES [Variantes]([Id]),
 	[Cantidad] INT NOT NULL,
 	[Precio_Compra] DECIMAL(10, 2) NOT NULL,
 	[Subtotal] DECIMAL(10, 2) NOT NULL,
-	[Vj_Plataforma] INT NOT NULL REFERENCES [VJ_Plataformas]([Id]),
 );
 
-INSERT INTO [Detalle_Pedidos] ([Pedido], [Cantidad], [Precio_Compra], [Subtotal], [Vj_Plataforma])
-VALUES (1, 10, 180000.00, 1800000.00, 1);
-
-CREATE TABLE [Resenas] (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Cliente] INT NOT NULL REFERENCES [Clientes]([Id]),
-	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
-	[Puntuacion] INT NOT NULL,
-	[Comentario] NVARCHAR(1000) NOT NULL,
-	[Fecha_Resena] SMALLDATETIME NOT NULL,
-);
-
-INSERT INTO [Resenas] ([Cliente], [Videojuego], [Puntuacion], [Comentario], [Fecha_Resena])
-VALUES (1, 1, 5, 'Excelente juego', GETDATE());
-
-CREATE TABLE [VJ_Promociones] (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Vj_Plataforma] INT NOT NULL REFERENCES [VJ_Plataformas]([Id]),
-	[Promocion] INT NOT NULL REFERENCES [Promociones]([Id]),
-	[Precio_Promocion] DECIMAL(10, 2) NOT NULL,
-);
-
-INSERT INTO [VJ_Promociones] ([Vj_Plataforma], [Promocion], [Precio_Promocion])
-VALUES (1, 1, 208000.00);
-
-CREATE TABLE [Desarr_Videoj] (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[Videojuego] INT NOT NULL REFERENCES [Videojuegos]([Id]),
-	[Desarrollador] INT NOT NULL REFERENCES [Desarrolladores]([Id]),
-	[Fecha_Lanzamiento] SMALLDATETIME NOT NULL,
-	[Clasif_Edad] NVARCHAR(20) NOT NULL,
-);
-
-INSERT INTO [Desarr_Videoj] ([Videojuego], [Desarrollador], [Fecha_Lanzamiento], [Clasif_Edad])
-VALUES (1, 1, GETDATE(), 'E10+');
+INSERT INTO [Detalles_Pedidos] ([Pedido], [Variante], [Cantidad], [Precio_Compra], [Subtotal])
+VALUES (1, 1, 10, 180000.00, 1800000.00);
 */

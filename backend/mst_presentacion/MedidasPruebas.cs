@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class MedidasPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Medidas? entidad = null;
 
-        public CategoriasPruebas()
+        public MedidasPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,37 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Medidas()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Cliente = 1,
+                Cintura = 74.00m,
+                Cadera = 100.00m,
+                Busto = 92.00m,
+                Fecha = DateTime.Now,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Medidas!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_medidas = this.conexion.Medidas!.ToList();
+            if (lista_medidas.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Cintura = 72.00m;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Medidas>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Medidas!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class MarcasPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Marcas? entidad = null;
 
-        public CategoriasPruebas()
+        public MarcasPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,20 +29,20 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Marcas()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
+                Nombre = "Ann Chery",
+                Pais = "Colombia",
                 Estado = true,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Marcas!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_marcas = this.conexion.Marcas!.ToList();
+            if (lista_marcas.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
@@ -50,14 +50,14 @@ namespace pruebas_unitarias
         {
             this.entidad!.Estado = false;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Marcas>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Marcas!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

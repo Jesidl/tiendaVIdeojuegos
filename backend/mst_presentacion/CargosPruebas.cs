@@ -31,9 +31,9 @@ namespace pruebas_unitarias
         {
             this.entidad = new Cargos()
             {
-                Nombre = "Cajero",
-                Descripcion = "Manejo de caja y cobros",
-                Salario = 1500000.00m,
+                Nombre = "Bodeguero",
+                Descripcion = "Recepcion y control de mercancia",
+                Salario = 1450000.00m,
             };
             this.conexion.Cargos!.Add(this.entidad!);
             this.conexion.SaveChanges();
@@ -48,7 +48,7 @@ namespace pruebas_unitarias
 
         private void Actualizar()
         {
-            this.entidad!.Salario = 1600000.00m;
+            this.entidad!.Salario = 1500000.00m;
 
             var entry = this.conexion!.Entry<Cargos>(this.entidad);
             entry.State = EntityState.Modified;

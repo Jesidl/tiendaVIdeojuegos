@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class ProductosPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Productos? entidad = null;
 
-        public CategoriasPruebas()
+        public ProductosPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,40 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Productos()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
+                Codigo = "FAJ-PRB",
+                Nombre = "Faja deportiva prueba",
+                Descripcion = "Faja de entrenamiento con cierre",
+                Precio = 150000.00m,
                 Estado = true,
+                Categoria = 1,
+                Marca = 1,
+                Material = 1,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Productos!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_productos = this.conexion.Productos!.ToList();
+            if (lista_productos.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Precio = 160000.00m;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Productos>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Productos!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

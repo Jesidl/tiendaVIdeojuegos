@@ -10,5 +10,6 @@ namespace lib_aplicaciones.entidades
         public bool Estado { get; set; }
 
         public List<Empleados>? Empleados { get; set; }
+        public List<Inventarios>? Inventarios { get; set; }
     }
 }

@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class ProveedoresPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Proveedores? entidad = null;
 
-        public CategoriasPruebas()
+        public ProveedoresPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,36 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Proveedores()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Nit = "900999888-7",
+                Nombre_Empresa = "Textiles Prueba SAS",
+                Telefono = "6042223344",
+                Correo = "contacto@textilesprueba.com",
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Proveedores!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_proveedores = this.conexion.Proveedores!.ToList();
+            if (lista_proveedores.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Telefono = "6042223355";
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Proveedores>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Proveedores!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

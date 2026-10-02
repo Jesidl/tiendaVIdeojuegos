@@ -31,10 +31,10 @@ namespace pruebas_unitarias
         {
             this.entidad = new Sucursales()
             {
-                Nombre = "Sucursal Norte",
-                Direccion = "Carrera 52 # 80-10",
-                Ciudad = "Bello",
-                Telefono = "6044567890",
+                Nombre = "Sucursal Envigado",
+                Direccion = "Carrera 43A # 38 Sur-15",
+                Ciudad = "Envigado",
+                Telefono = "6043334455",
                 Estado = true,
             };
             this.conexion.Sucursales!.Add(this.entidad!);

@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class PlataformasPruebas
+    public class PagosPruebas
     {
         private IConexion conexion;
-        private Plataformas? entidad = null;
+        private Pagos? entidad = null;
 
-        public PlataformasPruebas()
+        public PagosPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,36 +29,36 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Plataformas()
+            this.entidad = new Pagos()
             {
-                Nombre = "PlayStation 5",
-                Fabricante = "Sony",
-                Tipo = "Consola",
-                Estado = true,
+                Venta = 1,
+                Metodo_Pago = 1,
+                Valor = 100000.00m,
+                Fecha = DateTime.Now,
             };
-            this.conexion.Plataformas!.Add(this.entidad!);
+            this.conexion.Pagos!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_plataformas = this.conexion.Plataformas!.ToList();
-            if (lista_plataformas.Count <= 0)
+            var lista_pagos = this.conexion.Pagos!.ToList();
+            if (lista_pagos.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Tipo = "Consola de sobremesa";
+            this.entidad!.Valor = 120000.00m;
 
-            var entry = this.conexion!.Entry<Plataformas>(this.entidad);
+            var entry = this.conexion!.Entry<Pagos>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Plataformas!.Remove(this.entidad!);
+            this.conexion.Pagos!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }

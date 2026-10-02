@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace pruebas_unitarias
 {
     [TestClass]
-    public class CategoriasPruebas
+    public class VentasPruebas
     {
         private IConexion conexion;
-        private Categorias? entidad = null;
+        private Ventas? entidad = null;
 
-        public CategoriasPruebas()
+        public VentasPruebas()
         {
             this.conexion = new Conexion();
             this.conexion.StringConexion = Datosgenerales.ObtenerStringConexion();
@@ -29,35 +29,37 @@ namespace pruebas_unitarias
 
         public void Insertar()
         {
-            this.entidad = new Categorias()
+            this.entidad = new Ventas()
             {
-                Nombre = "Deportivas",
-                Descripcion = "Fajas para entrenamiento y ejercicio",
-                Estado = true,
+                Codigo = "V-PRB",
+                Cliente = 1,
+                Empleado = 1,
+                Fecha = DateTime.Now,
+                Total = 150000.00m,
             };
-            this.conexion.Categorias!.Add(this.entidad!);
+            this.conexion.Ventas!.Add(this.entidad!);
             this.conexion.SaveChanges();
         }
 
         public void Consultar()
         {
-            var lista_categorias = this.conexion.Categorias!.ToList();
-            if (lista_categorias.Count <= 0)
+            var lista_ventas = this.conexion.Ventas!.ToList();
+            if (lista_ventas.Count <= 0)
                 throw new Exception("Lista vacia");
         }
 
         private void Actualizar()
         {
-            this.entidad!.Estado = false;
+            this.entidad!.Total = 160000.00m;
 
-            var entry = this.conexion!.Entry<Categorias>(this.entidad);
+            var entry = this.conexion!.Entry<Ventas>(this.entidad);
             entry.State = EntityState.Modified;
             this.conexion!.SaveChanges();
         }
 
         private void Borrar()
         {
-            this.conexion.Categorias!.Remove(this.entidad!);
+            this.conexion.Ventas!.Remove(this.entidad!);
             this.conexion.SaveChanges();
         }
     }
